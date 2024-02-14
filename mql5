@@ -1,0 +1,84 @@
+
+// WaveTrend Oscillator Indicator
+// Developer: Forex Robot Easy Team (forexroboteasy.com)
+
+#property indicator_chart_window
+#property indicator_buffers 2
+
+// Declare indicator buffers
+double ExtBuffer1[];
+double ExtBuffer2[];
+
+// Declare variables
+int ExtCountedBars;
+
+//+------------------------------------------------------------------+
+//| Custom indicator initialization function                         |
+//+------------------------------------------------------------------+
+int OnInit()
+{
+    // Set indicator buffers
+    SetIndexBuffer(0, ExtBuffer1);
+    SetIndexBuffer(1, ExtBuffer2);
+
+    // Set indicator label
+    IndicatorShortName('WaveTrend Oscillator');
+
+    // Set indicator parameters
+    SetIndexStyle(0, DRAW_LINE);
+    SetIndexStyle(1, DRAW_LINE);
+
+    // Set indicator colors
+    SetIndexDrawBegin(0, WaveTrendColor());
+    SetIndexDrawBegin(1, WaveTrendColor());
+
+    return(INIT_SUCCEEDED);
+}
+
+//+------------------------------------------------------------------+
+//| Custom indicator iteration function                              |
+//+------------------------------------------------------------------+
+int OnCalculate(const int rates_total,
+                const int prev_calculated,
+                const datetime &time[],
+                const double &open[],
+                const double &high[],
+                const double &low[],
+                const double &close[],
+                const long &tick_volume[],
+                const long &volume[],
+                const int &spread[])
+{
+    // Calculate indicator values
+    ExtCountedBars = IndicatorCounted();
+    int limit = rates_total - ExtCountedBars;
+
+    for (int i = 0; i < limit; i++)
+    {
+        ExtBuffer1[i] = WaveTrendValue(i);
+        ExtBuffer2[i] = SignalLineValue(i);
+    }
+
+    return(rates_total);
+}
+
+//+------------------------------------------------------------------+
+//| Custom indicator buffers and values calculation functions        |
+//+------------------------------------------------------------------+
+double WaveTrendValue(int index)
+{
+    // Calculate WaveTrend value
+    // Implement your calculation logic here
+}
+
+double SignalLineValue(int index)
+{
+    // Calculate Signal Line value
+    // Implement your calculation logic here
+}
+
+color WaveTrendColor()
+{
+    // Set WaveTrend color
+    // Implement your color logic here
+}
